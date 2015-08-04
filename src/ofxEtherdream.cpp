@@ -5,7 +5,8 @@ void ofxEtherdream::setup(bool bStartThread, int idEtherdream) {
 
     idEtherdreamConnection = idEtherdream;
     
-    etherdream_lib_start();
+    //etherdream_lib_start();
+    startEtherdreamLib();
     
     setPPS(30000);
     setWaitBeforeSend(false);

@@ -12,8 +12,29 @@
 #include "etherdream.h"
 #include "ofxIldaFrame.h"
 
+static int IS_ETHERDREAM_LIB_STARTED = false;
+
 class ofxEtherdream : public ofThread {
 public:
+    // must be called once
+    inline static int startEtherdreamLib(){
+        if (IS_ETHERDREAM_LIB_STARTED){
+            ofLog(OF_LOG_NOTICE, "etherdream libs already started -- do nothing");
+            return 0;
+        }
+        etherdream_lib_start();
+        IS_ETHERDREAM_LIB_STARTED = true;
+        return 1;
+    }
+    
+    inline static int getNumEtherdream(){
+        if(startEtherdreamLib()){
+            // wait of 2.5 secs if etherlib was not yet started, time for dacs to be found
+            ofSleepMillis(2500);
+        }
+        return etherdream_dac_count();
+    }
+    
     ofxEtherdream():state(ETHERDREAM_NOTFOUND), bAutoConnect(false) {}
     
     ~ofxEtherdream() {
