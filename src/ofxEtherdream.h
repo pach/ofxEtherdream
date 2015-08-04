@@ -22,16 +22,18 @@ public:
             ofLog(OF_LOG_NOTICE, "etherdream libs already started -- do nothing");
             return 0;
         }
+        
         etherdream_lib_start();
+        /* Sleep for a bit over two second, to ensure that we see broadcasts
+         * from all available DACs. */
+        usleep(2000000);
+        
         IS_ETHERDREAM_LIB_STARTED = true;
         return 1;
     }
     
     inline static int getNumEtherdream(){
-        if(startEtherdreamLib()){
-            // wait of 2.5 secs if etherlib was not yet started, time for dacs to be found
-            ofSleepMillis(2500);
-        }
+        startEtherdreamLib();
         return etherdream_dac_count();
     }
     
