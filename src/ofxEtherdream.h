@@ -55,6 +55,7 @@ public:
     }
     
     void setup(bool bStartThread = true, int idEtherdream = 0);
+    void setup(bool bStartThread = true, unsigned long idEtherdream = 0);
     virtual void threadedFunction();
     
     
@@ -79,6 +80,8 @@ public:
     void setWaitBeforeSend(bool b);
     bool getWaitBeforeSend() const;
     
+    unsigned long getEtherdreamId();
+    
 private:
     void init();
     
@@ -95,5 +98,5 @@ private:
     struct etherdream *device;
     vector<ofxIlda::Point> points;
     
-    int idEtherdreamConnection;
+    unsigned long idEtherdreamConnection;
 };
